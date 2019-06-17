@@ -15,20 +15,30 @@ class Graph:
         Add a vertex to the graph.
         """
         if vertex not in self.vertices:
-            self.vertices[vertex] = dict()
+            self.vertices[vertex] = set()
 
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        if v1 in self.vertices and v2 in self.vertices:
+            self.vertices[v1].add(v2)
 
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        visited = set()
+        queue = Queue()
+        queue.enqueue(starting_vertex)
+        while queue.size() > 0:
+            vertex = queue.dequeue()
+            if vertex not in visited:
+                visited.add(vertex)
+                print(vertex)
+                for neighbor in self.vertices[vertex]:
+                    queue.enqueue(neighbor)
 
     def dft(self, starting_vertex):
         """
