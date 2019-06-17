@@ -23,6 +23,15 @@ class Graph:
         """
         if v1 in self.vertices and v2 in self.vertices:
             self.vertices[v1].add(v2)
+        else:
+            raise IndexError('These vertices do not exist')
+
+    def add_edge_u(self, v1, v2):
+        if v1 in self.vertices and v2 in self.vertices:
+            self.vertices[v1].add(v2)
+            self.vertices[v2].add(v1)
+        else:
+            raise IndexError('These vertices do not exist')
 
     def bft(self, starting_vertex):
         """
@@ -56,13 +65,20 @@ class Graph:
                 for neighbor in self.vertices[vertex]:
                     stack.push(neighbor)
 
-    def dft_recursive(self, starting_vertex):
+    def dft_recursive(self, starting_vertex, visited=False):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         This should be done using recursion.
         """
-        pass  # TODO
+        if not visited:
+            visited = set()
+
+        visited.add(starting_vertex)
+        print(starting_vertex)
+        for vertex in self.vertices[starting_vertex]:
+            self.dft_recursive(
+                vertex, visited) if vertex not in visited else None
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -70,7 +86,7 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        pass
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -78,7 +94,7 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        pass
 
 
 if __name__ == '__main__':
