@@ -14,7 +14,8 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        if vertex not in self.vertices:
+            self.vertices[vertex] = dict()
 
     def add_edge(self, v1, v2):
         """
