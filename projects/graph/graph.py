@@ -86,7 +86,24 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass
+        if starting_vertex == destination_vertex:
+            return [starting_vertex]
+
+        visited = set()
+        queue = Queue()
+        queue.enqueue([starting_vertex])
+        while queue.size() > 0:
+            path = queue.dequeue()
+            vertex = path[-1]
+            if vertex not in visited:
+                for neighbor in self.vertices[vertex]:
+                    path_new = path[:]
+                    path_new.append(neighbor)
+                    queue.enqueue(path_new)
+                    if neighbor == destination_vertex:
+                        return path_new
+                visited.add(vertex)
+        return []
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -94,7 +111,24 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass
+        if starting_vertex == destination_vertex:
+            return [starting_vertex]
+
+        visited = set()
+        stack = Stack()
+        stack.push([starting_vertex])
+        while stack.size() > 0:
+            path = stack.pop()
+            vertex = path[-1]
+            if vertex not in visited:
+                for neighbor in self.vertices[vertex]:
+                    path_new = path[:]
+                    path_new.append(neighbor)
+                    stack.push(path_new)
+                    if neighbor == destination_vertex:
+                        return path_new
+                visited.add(vertex)
+        return []
 
 
 if __name__ == '__main__':
