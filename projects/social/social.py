@@ -1,8 +1,11 @@
+import random
+from collections import deque
 
 
 class User:
     def __init__(self, name):
         self.name = name
+
 
 class SocialGraph:
     def __init__(self):
@@ -44,11 +47,19 @@ class SocialGraph:
         self.lastID = 0
         self.users = {}
         self.friendships = {}
-        # !!!! IMPLEMENT ME
-
         # Add users
-
+        for i in range(numUsers):
+            self.addUser(f'{i}')
         # Create friendships
+        possible_friendships = []
+        for user in self.users:
+            for friend in range(user+1, self.lastID+1):
+                possible_friendships.append((user, friend))
+
+        random.shuffle(possible_friendships)
+        for friendship in range(avgFriendships*numUsers//2):
+            friendship_pair = possible_friendships[friendship]
+            self.addFriendship(friendship_pair[0], friendship_pair[1])
 
     def getAllSocialPaths(self, userID):
         """
@@ -60,7 +71,19 @@ class SocialGraph:
         The key is the friend's ID and the value is the path.
         """
         visited = {}  # Note that this is a dictionary, not a set
-        # !!!! IMPLEMENT ME
+
+        # bfs
+        queue = deque()
+        queue.append([userID])
+        while len(queue) > 0:
+            path = queue.popleft()
+            vertex = path[-1]
+            if vertex not in visited:
+                visited[vertex] = path
+                for friendship in self.friendships[vertex]:
+                    path_new = path[:]
+                    path_new.append(friendship)
+                    queue.append(path_new)
         return visited
 
 
